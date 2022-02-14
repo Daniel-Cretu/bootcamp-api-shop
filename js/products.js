@@ -1,81 +1,39 @@
 "use strict";
 
-function getProductTemplate(product) {
-    return `
-        <div class="col mb-5">
-            <div class="card h-100" id="product-${product.id}">
-                <!-- Product image-->
-                <img class="card-img-top" src="${product.image}" alt="..." />
-                <!-- Product details-->
-                <div class="card-body p-4">
-                    <div class="text-center">
-                        <!-- Product name-->
-                        <h5 class="fw-bolder">${product.title}</h5>
-                        <!-- Product reviews-->
-                        <div class="d-flex justify-content-center small text-warning mb-2">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                        </div>
-                        <!-- Product price-->
-                        $${product.price}
-                    </div>
-                </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center">
-                        <button class="add-to-cart btn btn-outline-dark mt-auto" href="#" onClick=addToCart(${product.id})>Add to cart</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-async function fetchProducts() {
-    let products = localStorage.getItem("products");
+const productTemplate = document.querySelector("[product-template]");
 
-    if (products === null) {
-        const response = await fetch("https://fakestoreapi.com/products");
-        const result = await response.json();
+const productSection = document.querySelector(".products");
 
-        const products = result.map((product) => {
-            return {
-                id: product.id,
-                title: product.title,
-                image: product.image,
-                price: product.price,
-                stars: Math.round(product.rating.rate),
-            };
-        });
 
-        localStorage.setItem("products", JSON.stringify(products));
+function addToCart(event) {
+    console.log(event.currentTarget.id);
+    const basket = JSON.parse(localStorage.getItem("basket")) ?? {};
+    if(basket[event.currentTarget.id] == null){
+        basket[event.currentTarget.id] = 1;
     } else {
-        products = JSON.parse(products);
+        basket[event.currentTarget.id] = ++basket[event.currentTarget.id];
     }
-
-    return products;
-}
-
-function addToCart(id) {
-    console.log(id);
+    localStorage.setItem("basket", JSON.stringify(basket));
+    updateCartNumber();
 }
 
 fetchProducts().then((products) => {
     const productsRow = document.querySelector("[data-products-row]");
 
     products.forEach((product) => {
-        productsRow.innerHTML += getProductTemplate(product);
+        const newProduct = productTemplate.content.cloneNode(true).children[0];
+        newProduct.id = "product-" + product.id;
+        newProduct.querySelector(".product-title").textContent = product.title;
+        newProduct.querySelector(".product-img").src = product.image;
+        newProduct.querySelector(".product-price").textContent =
+            "$" + product.price;
+
+        productSection.append(newProduct);
 
         const addToCartButton = productsRow.querySelector(
             `#product-${product.id} button.add-to-cart`
         );
-
-        addToCartButton.addEventListener("click", addToCart);
+        addToCartButton.addEventListener("click", addToCart, false);
+        addToCartButton.id = product.id;
     });
 });
-
-// Elemente in cos in local storage
-// nr de elemente sus in cos
-// o pagina pentru cos

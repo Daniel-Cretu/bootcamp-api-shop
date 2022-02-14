@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Shop Homepage - Start Bootstrap Template</title>
+    <title>Shop Cart - Start Bootstrap Template</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -55,43 +55,20 @@
     <!-- Section-->
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center products"
-                data-products-row>
-
-                <!-- List of products -->
-                <template product-template>
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="product-img card-img-top" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="product-title fw-bolder"></h5>
-                                    <!-- Product reviews-->
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>
-                                    <!-- Product price-->
-                                    <div class="product-price"></div>
-                                </div>
-                            </div>
-                            <!-- Product actions -->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center">
-                                    <button class="add-to-cart btn btn-outline-dark mt-auto" href="#">Add to
-                                        cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </div>
+            <button type="button" class="btn btn-danger" onClick=clearCart()>Clear Cart</button>
+            <table class="cart-table table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Count</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody class="cart-table-body">
+                </tbody>
+            </table>
         </div>
     </section>
     <!-- Footer-->
@@ -107,7 +84,7 @@
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
 
-    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 
 </html>
